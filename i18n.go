@@ -25,7 +25,7 @@ type A map[string]interface{}
 
 // GetLocalization returns the localization object for a given language
 func GetLocalization(language string, bundle *i18n.Bundle) (*Localization, error) {
-	loc := i18n.NewLocalizer(bundle, "en-AU")
+	loc := i18n.NewLocalizer(bundle, language)
 
 	return &Localization{
 		Localizer: *loc,
@@ -112,15 +112,6 @@ func (l *Localization) applyDefaultTranslationArgs(args A) A {
 	if l.argModifier != nil {
 		args = l.argModifier(args, l)
 	}
-
-	args["HolidayTerm"] = l.TPlain("holidayTerm")
-	args["HolidayTermPlural"] = l.TPlain("holidayTerm_plural")
-	args["OfferTerm"] = l.TPlain("offerTerm")
-	args["OfferTermPlural"] = l.TPlain("offerTerm_plural")
-	args["Brand"] = l.TPlain("brand")
-	args["HolidayTermQR"] = l.TPlain("holidayTerm_qr")
-	args["HolidayTermPluralQR"] = l.TPlain("holidayTerm_plural_qr")
-	args["OfferTermPluralQR"] = l.TPlain("offerTerm_plural_qr")
 
 	return args
 }

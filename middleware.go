@@ -12,7 +12,7 @@ type ArgModifierFunc func(args A, l *Localization) A
 // this can later be loaded to do translations.
 // This middleware will pull the language from the "lang" flag
 // so make sure it's set
-func Middleware(config LocalizationConfig) gbl.MiddlewareFunction {
+func Middleware(config *LocalizationConfig) gbl.MiddlewareFunction {
 	return func(c *gbl.Context) {
 		var loc *Localization
 
