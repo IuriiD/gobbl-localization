@@ -10,6 +10,13 @@ import (
 // This is done to add helper functions to ease translation
 type Localization struct {
 	i18n.Localizer
+	argModifier ArgModifierFunc
+}
+
+// LocalizationConfig is the config
+type LocalizationConfig struct {
+	Bundle      *i18n.Bundle
+	ArgModifier ArgModifierFunc
 }
 
 // A is an alias to map[string]interface{} to allow for passing
@@ -100,6 +107,10 @@ func (l *Localization) TAP(key string, args A, count int) string {
 func (l *Localization) applyDefaultTranslationArgs(args A) A {
 	if args == nil {
 		args = make(map[string]interface{})
+	}
+
+	if l.argModifier != nil {
+		args = l.argModifier(args, l)
 	}
 
 	args["HolidayTerm"] = l.TPlain("holidayTerm")
